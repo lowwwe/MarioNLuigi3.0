@@ -217,6 +217,13 @@ void Game::setupAudio()
 	{
 		std::cout << "problem with mario sound" << std::endl;
 	}
+	if (!m_luigiSoundBuffer.loadFromFile("ASSETS/AUDIO/luigi.wav"))
+	{
+		std::cout << "problem with mario sound" << std::endl;
+	}
+	m_marioSound.setBuffer(m_marioSoundBuffer);
+	m_luigiSound.setBuffer(m_luigiSoundBuffer);
+	
 }
 
 /// <summary>
@@ -256,10 +263,24 @@ void Game::changeCharacter()
 	if (m_isMario)
 	{
 		m_MarioSprite.setTextureRect(sf::IntRect{sf::Vector2i{64,0}, sf::Vector2i{64,148}});
+		m_luigiSound.play();
+		m_characterName.setString("Luigi");
+		m_characterName.setFillColor(sf::Color::Green);
 	}
 	else
 	{
 		m_MarioSprite.setTextureRect(sf::IntRect{ sf::Vector2i{0,0}, sf::Vector2i{64,148} });
+		m_marioSound.play();
+		m_characterName.setString("Mario");
+		m_characterName.setFillColor(sf::Color::Red);
 	}
+	centreText();
 	m_isMario = !m_isMario;
+}
+
+void Game::centreText()
+{
+	sf::Vector2f position{ 0.0f,200.0f };
+	position.x = (800.0f - m_characterName.getGlobalBounds().size.x) / 2.0f;
+	m_characterName.setPosition(position);
 }

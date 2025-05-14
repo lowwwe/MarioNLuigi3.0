@@ -53,6 +53,7 @@ private:
 
 	void move();
 	void changeCharacter();
+	void centreText();
 
 	
 	sf::RenderWindow m_window; // main SFML window
@@ -66,6 +67,8 @@ private:
 	
 	sf::SoundBuffer m_marioSoundBuffer;// sound buffer for mario wav
 	sf::Sound m_marioSound{ m_marioSoundBuffer };// sound effect for mario
+	sf::SoundBuffer m_luigiSoundBuffer;
+	sf::Sound m_luigiSound{ m_luigiSoundBuffer };
 
 
 	sf::Vector2f m_location{ 200.0f,200.0f };// character's location
