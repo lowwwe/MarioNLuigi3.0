@@ -43,16 +43,18 @@ private:
 
 	
 	sf::RenderWindow m_window; // main SFML window
-	sf::Font m_jerseyFont;// font used by message
 	
-	sf::Text m_DELETEwelcomeMessage{ m_jerseyFont }; // text used for message on screen
 	
+	sf::Font m_marioFont;// font used for character names
+	sf::Text m_characterName{ m_marioFont };// text for character names
 
 	sf::Texture m_marioTexture; // texture used for Mario and Luigi
 	sf::Sprite m_MarioSprite{ m_marioTexture };// sprite used for both Mario and Luigi
 	
-	sf::SoundBuffer m_DELETEsoundBuffer; // buffer for beep sound
-	sf::Sound m_DELETEsound{ m_DELETEsoundBuffer }; // sound object to play
+	sf::SoundBuffer m_marioSoundBuffer;// sound buffer for mario wav
+	sf::Sound m_marioSound{ m_marioSoundBuffer };// sound effect for mario
+
+	
 	bool m_DELETEexitGame; // control exiting game
 
 };

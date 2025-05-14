@@ -128,8 +128,8 @@ void Game::render()
 	m_window.clear(ULTRAMARINE);
 
 	m_window.draw(m_MarioSprite);
-
-	m_window.draw(m_DELETEwelcomeMessage);
+	m_window.draw(m_characterName);
+	
 	
 	m_window.display();
 }
@@ -139,17 +139,19 @@ void Game::render()
 /// </summary>
 void Game::setupTexts()
 {
-	if (!m_jerseyFont.openFromFile("ASSETS\\FONTS\\Jersey20-Regular.ttf"))
+	if (!m_marioFont.openFromFile("ASSETS/FONTS/SuperMario256.ttf"))
 	{
-		std::cout << "problem loading arial black font" << std::endl;
+		std::cout << "problem with font" << std::endl;
 	}
-	m_DELETEwelcomeMessage.setFont(m_jerseyFont);
-	m_DELETEwelcomeMessage.setString("SFML Game");
-	m_DELETEwelcomeMessage.setPosition(sf::Vector2f{ 205.0f, 240.0f });
-	m_DELETEwelcomeMessage.setCharacterSize(96U);
-	m_DELETEwelcomeMessage.setOutlineColor(sf::Color::Black);
-	m_DELETEwelcomeMessage.setFillColor(sf::Color::Red);
-	m_DELETEwelcomeMessage.setOutlineThickness(2.0f);
+	m_characterName.setFont(m_marioFont);
+	m_characterName.setString("Mario");
+	m_characterName.setCharacterSize(80U);
+	m_characterName.setPosition(sf::Vector2f{ 100.0f,100.0f });
+	m_characterName.setFillColor(sf::Color::Red);
+	m_characterName.setOutlineColor(sf::Color::Black);
+	m_characterName.setOutlineThickness(2.0f);
+	
+
 
 }
 
@@ -175,9 +177,8 @@ void Game::setupSprites()
 /// </summary>
 void Game::setupAudio()
 {
-	if (!m_DELETEsoundBuffer.loadFromFile("ASSETS\\AUDIO\\beep.wav"))
+	if (!m_marioSoundBuffer.loadFromFile("ASSETS/AUDIO/mario.wav"))
 	{
-		std::cout << "Error loading beep sound" << std::endl;
+		std::cout << "problem with mario sound" << std::endl;
 	}
-	m_DELETEsound.play(); // test sound
 }
