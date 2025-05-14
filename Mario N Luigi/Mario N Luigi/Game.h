@@ -46,8 +46,10 @@ private:
 	sf::Font m_jerseyFont;// font used by message
 	
 	sf::Text m_DELETEwelcomeMessage{ m_jerseyFont }; // text used for message on screen
-	sf::Texture m_DELETElogoTexture;//  texture used for sfml logo
-	sf::Sprite m_DELETElogoSprite{ m_DELETElogoTexture }; // sprite used for sfml logo
+	
+
+	sf::Texture m_marioTexture; // texture used for Mario and Luigi
+	sf::Sprite m_MarioSprite{ m_marioTexture };// sprite used for both Mario and Luigi
 	
 	sf::SoundBuffer m_DELETEsoundBuffer; // buffer for beep sound
 	sf::Sound m_DELETEsound{ m_DELETEsoundBuffer }; // sound object to play

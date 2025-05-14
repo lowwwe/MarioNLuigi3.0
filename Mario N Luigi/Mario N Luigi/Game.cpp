@@ -28,7 +28,7 @@ Game::Game() :
 
 /// <summary>
 /// default destructor we didn't dynamically allocate anything
-/// so we don't need to free it, but mthod needs to be here
+/// so we don't need to free it, but method needs to be here
 /// </summary>
 Game::~Game()
 {
@@ -127,7 +127,8 @@ void Game::render()
 {
 	m_window.clear(ULTRAMARINE);
 
-	m_window.draw(m_DELETElogoSprite);
+	m_window.draw(m_MarioSprite);
+
 	m_window.draw(m_DELETEwelcomeMessage);
 	
 	m_window.display();
@@ -157,14 +158,16 @@ void Game::setupTexts()
 /// </summary>
 void Game::setupSprites()
 {
-	if (!m_DELETElogoTexture.loadFromFile("ASSETS\\IMAGES\\SFML-LOGO.png"))
+	if (!m_marioTexture.loadFromFile("ASSETS\\IMAGES\\mario-luigi-64.png"))
 	{
-		// simple error message if previous call fails
-		std::cout << "problem loading logo" << std::endl;
+		std::cout << "Problem finding Mario" << std::endl;
 	}
+	m_MarioSprite.setTexture(m_marioTexture);
+	m_MarioSprite.setTextureRect(sf::IntRect{ sf::Vector2i{0,0}, sf::Vector2i{64,148} });
+	m_MarioSprite.setPosition(sf::Vector2f{ 350.0f,200.0f });
+
 	
-	m_DELETElogoSprite.setTexture(m_DELETElogoTexture,true);// to reset the dimensions of texture
-	m_DELETElogoSprite.setPosition(sf::Vector2f{ 150.0f, 50.0f });
+	
 }
 
 /// <summary>
