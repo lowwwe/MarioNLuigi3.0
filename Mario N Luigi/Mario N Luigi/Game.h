@@ -19,6 +19,15 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
+enum class  Direction
+{
+	None,
+	Up,
+	Down,
+	Left,
+	Right
+	
+};
 
 const sf::Color ULTRAMARINE{ 5, 55,242,255 }; // const colour
 
@@ -41,6 +50,8 @@ private:
 	void setupSprites();
 	void setupAudio();
 
+	void move();
+
 	
 	sf::RenderWindow m_window; // main SFML window
 	
@@ -54,7 +65,9 @@ private:
 	sf::SoundBuffer m_marioSoundBuffer;// sound buffer for mario wav
 	sf::Sound m_marioSound{ m_marioSoundBuffer };// sound effect for mario
 
-	
+
+	sf::Vector2f m_location{ 200.0f,200.0f };// character's location
+	Direction m_direction{ Direction::None }; // dirtection character is moving
 	bool m_DELETEexitGame; // control exiting game
 
 };

@@ -101,9 +101,30 @@ void Game::processKeys(const std::optional<sf::Event> t_event)
 /// </summary>
 void Game::checkKeyboardState()
 {
+	m_direction = Direction::None;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
 	{
 		m_DELETEexitGame = true; 
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) 
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+	{
+		m_direction = Direction::Up;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+	{
+		m_direction = Direction::Down;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+	{
+		m_direction = Direction::Left;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+	{
+		m_direction = Direction::Right;
 	}
 }
 
@@ -118,6 +139,7 @@ void Game::update(sf::Time t_deltaTime)
 	{
 		m_window.close();
 	}
+	move();
 }
 
 /// <summary>
@@ -127,8 +149,8 @@ void Game::render()
 {
 	m_window.clear(ULTRAMARINE);
 
-	m_window.draw(m_MarioSprite);
 	m_window.draw(m_characterName);
+	m_window.draw(m_MarioSprite);
 	
 	
 	m_window.display();
@@ -166,7 +188,7 @@ void Game::setupSprites()
 	}
 	m_MarioSprite.setTexture(m_marioTexture);
 	m_MarioSprite.setTextureRect(sf::IntRect{ sf::Vector2i{0,0}, sf::Vector2i{64,148} });
-	m_MarioSprite.setPosition(sf::Vector2f{ 350.0f,200.0f });
+	m_MarioSprite.setPosition(m_location);
 
 	
 	
@@ -181,4 +203,36 @@ void Game::setupAudio()
 	{
 		std::cout << "problem with mario sound" << std::endl;
 	}
+}
+
+/// <summary>
+/// check m_direction and move sprite
+/// </summary>
+void Game::move()
+{
+	sf::Vector2f movement{ 0.0f,0.0f }; // movement
+	float speed = 2.5f;// speed of movement
+
+	switch (m_direction)
+	{
+	case Direction::None:
+		break;
+	case Direction::Up:
+		movement.y = -speed;
+		break;
+	case Direction::Down:
+		movement.y = speed;
+		break;
+	case Direction::Left:
+		movement.x = -speed;
+		break;
+	case Direction::Right:
+		movement.x = speed;
+		break;
+	default:
+		break;
+	}
+
+	m_location += movement;
+	m_MarioSprite.setPosition(m_location);
 }
