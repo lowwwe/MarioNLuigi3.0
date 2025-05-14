@@ -154,6 +154,7 @@ void Game::update(sf::Time t_deltaTime)
 		m_window.close();
 	}
 	move();
+	checkBoundaries();
 }
 
 /// <summary>
@@ -255,6 +256,29 @@ void Game::move()
 	}
 
 	m_location += movement;
+	m_MarioSprite.setPosition(m_location);
+}
+
+void Game::checkBoundaries()
+{
+	if (m_location.x < 0.0f)
+	{
+		m_location.x = 0.0f;
+	}
+	if (m_location.y < 0.0f)
+	{
+		m_location.y = 0.0f;
+	}
+	if (m_location.y > (600.0f - 148.0f))
+	{
+		m_location.y = 600.0f - 148.0f;
+	}
+	if (m_location.x > (800.0f - 64.0f))
+	{
+		m_location.x = 800.0f - 64.0f;
+	}
+
+
 	m_MarioSprite.setPosition(m_location);
 }
 

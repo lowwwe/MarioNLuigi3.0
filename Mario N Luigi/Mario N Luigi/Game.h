@@ -52,6 +52,7 @@ private:
 	void setupAudio();
 
 	void move();
+	void checkBoundaries();
 	void changeCharacter();
 	void centreText();
 
