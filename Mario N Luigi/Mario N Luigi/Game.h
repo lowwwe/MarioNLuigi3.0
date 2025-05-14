@@ -42,6 +42,7 @@ private:
 
 	void processEvents();
 	void processKeys(const std::optional<sf::Event> t_event);
+	void processKeyReleases(const std::optional<sf::Event> t_event);
 	void checkKeyboardState();
 	void update(sf::Time t_deltaTime);
 	void render();
@@ -51,6 +52,7 @@ private:
 	void setupAudio();
 
 	void move();
+	void changeCharacter();
 
 	
 	sf::RenderWindow m_window; // main SFML window
@@ -68,6 +70,8 @@ private:
 
 	sf::Vector2f m_location{ 200.0f,200.0f };// character's location
 	Direction m_direction{ Direction::None }; // dirtection character is moving
+	bool m_isMario{ true };// mario is current character
+	
 	bool m_DELETEexitGame; // control exiting game
 
 };

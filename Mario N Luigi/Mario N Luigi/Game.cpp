@@ -79,6 +79,10 @@ void Game::processEvents()
 		{
 			processKeys(newEvent);
 		}
+		if (newEvent->is<sf::Event::KeyReleased>()) // user released a key
+		{
+			processKeyReleases(newEvent);
+		}
 	}
 }
 
@@ -93,6 +97,16 @@ void Game::processKeys(const std::optional<sf::Event> t_event)
 	if (sf::Keyboard::Key::Escape == newKeypress->code)
 	{
 		m_DELETEexitGame = true; 
+	}
+	
+}
+
+void Game::processKeyReleases(const std::optional<sf::Event> t_event)
+{
+	const sf::Event::KeyReleased* newKeyRelease = t_event->getIf<sf::Event::KeyReleased>();
+	if (sf::Keyboard::Key::Space == newKeyRelease->code)
+	{
+		changeCharacter();
 	}
 }
 
@@ -235,4 +249,17 @@ void Game::move()
 
 	m_location += movement;
 	m_MarioSprite.setPosition(m_location);
+}
+
+void Game::changeCharacter()
+{
+	if (m_isMario)
+	{
+		m_MarioSprite.setTextureRect(sf::IntRect{sf::Vector2i{64,0}, sf::Vector2i{64,148}});
+	}
+	else
+	{
+		m_MarioSprite.setTextureRect(sf::IntRect{ sf::Vector2i{0,0}, sf::Vector2i{64,148} });
+	}
+	m_isMario = !m_isMario;
 }
