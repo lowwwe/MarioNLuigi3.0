@@ -2,6 +2,12 @@
 /// author Pete Lowe May 2025
 /// you need to change the above line or lose marks
 /// Mario N Luigi game
+/// 
+/// 
+/// estimate 60 min
+/// 14/5 45 min
+/// 15/5 15 min
+/// actual 60 min
 /// </summary>
 
 
@@ -19,7 +25,7 @@
 /// </summary>
 Game::Game() :
 	m_window{ sf::VideoMode{ sf::Vector2u{800U, 600U}, 32U }, "Mario N Luigi" },
-	m_DELETEexitGame{false} //when true game will exit
+	m_exitGame{false} //when true game will exit
 {
 	setupTexts(); // load font 
 	setupSprites(); // load texture
@@ -73,11 +79,11 @@ void Game::processEvents()
 	{
 		if ( newEvent->is<sf::Event::Closed>()) // close window message 
 		{
-			m_DELETEexitGame = true;
+			m_exitGame = true;
 		}
 		if (newEvent->is<sf::Event::KeyPressed>()) //user pressed a key
 		{
-			processKeys(newEvent);
+			processKeyPresses(newEvent);
 		}
 		if (newEvent->is<sf::Event::KeyReleased>()) // user released a key
 		{
@@ -91,16 +97,20 @@ void Game::processEvents()
 /// deal with key presses from the user
 /// </summary>
 /// <param name="t_event">key press event</param>
-void Game::processKeys(const std::optional<sf::Event> t_event)
+void Game::processKeyPresses(const std::optional<sf::Event> t_event)
 {
 	const sf::Event::KeyPressed *newKeypress = t_event->getIf<sf::Event::KeyPressed>();
 	if (sf::Keyboard::Key::Escape == newKeypress->code)
 	{
-		m_DELETEexitGame = true; 
+		m_exitGame = true; 
 	}
 	
 }
 
+/// <summary>
+/// deal with key release event
+/// </summary>
+/// <param name="t_event">key release event</param>
 void Game::processKeyReleases(const std::optional<sf::Event> t_event)
 {
 	const sf::Event::KeyReleased* newKeyRelease = t_event->getIf<sf::Event::KeyReleased>();
@@ -118,12 +128,12 @@ void Game::checkKeyboardState()
 	m_direction = Direction::None;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
 	{
-		m_DELETEexitGame = true; 
+		m_exitGame = true; 
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)  
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
 	{
-		m_direction = Direction::Up;
+		m_direction = Direction::Up; // go up
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
@@ -149,7 +159,7 @@ void Game::checkKeyboardState()
 void Game::update(sf::Time t_deltaTime)
 {
 	checkKeyboardState();
-	if (m_DELETEexitGame)
+	if (m_exitGame)
 	{
 		m_window.close();
 	}
@@ -259,6 +269,9 @@ void Game::move()
 	m_MarioSprite.setPosition(m_location);
 }
 
+/// <summary>
+/// check all 4 side and keep sprite inside screen
+/// </summary>
 void Game::checkBoundaries()
 {
 	if (m_location.x < 0.0f)
@@ -269,19 +282,23 @@ void Game::checkBoundaries()
 	{
 		m_location.y = 0.0f;
 	}
-	if (m_location.y > (600.0f - 148.0f))
+	if (m_location.y > (600.0f - 148.0f)) // 148 is height
 	{
 		m_location.y = 600.0f - 148.0f;
 	}
-	if (m_location.x > (800.0f - 64.0f))
+	if (m_location.x > (800.0f - 64.0f)) // 64 is width
 	{
 		m_location.x = 800.0f - 64.0f;
 	}
 
-
 	m_MarioSprite.setPosition(m_location);
 }
 
+
+/// <summary>
+/// switch between Mario and Luigi texture rect, Text, and colour
+/// play sound
+/// </summary>
 void Game::changeCharacter()
 {
 	if (m_isMario)
@@ -302,9 +319,13 @@ void Game::changeCharacter()
 	m_isMario = !m_isMario;
 }
 
+/// <summary>
+/// centre text on screen
+/// </summary>
 void Game::centreText()
 {
 	sf::Vector2f position{ 0.0f,200.0f };
+	//use global bound width to calculate left co-ordinate
 	position.x = (800.0f - m_characterName.getGlobalBounds().size.x) / 2.0f;
 	m_characterName.setPosition(position);
 }

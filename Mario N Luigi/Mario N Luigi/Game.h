@@ -1,7 +1,6 @@
 /// <summary>
 /// author Pete Lowe May 2025
-/// you need to change the above line or lose marks
-/// Also don't have any member properties called Delete...
+/// simple mario game
 /// </summary>
 #ifndef GAME_HPP
 #define GAME_HPP
@@ -41,7 +40,7 @@ public:
 private:
 
 	void processEvents();
-	void processKeys(const std::optional<sf::Event> t_event);
+	void processKeyPresses(const std::optional<sf::Event> t_event);
 	void processKeyReleases(const std::optional<sf::Event> t_event);
 	void checkKeyboardState();
 	void update(sf::Time t_deltaTime);
@@ -53,6 +52,7 @@ private:
 
 	void move();
 	void checkBoundaries();
+
 	void changeCharacter();
 	void centreText();
 
@@ -71,12 +71,12 @@ private:
 	sf::SoundBuffer m_luigiSoundBuffer;
 	sf::Sound m_luigiSound{ m_luigiSoundBuffer };
 
-
 	sf::Vector2f m_location{ 200.0f,200.0f };// character's location
-	Direction m_direction{ Direction::None }; // dirtection character is moving
+	Direction m_direction{ Direction::None }; // direction character is moving
+	
 	bool m_isMario{ true };// mario is current character
 	
-	bool m_DELETEexitGame; // control exiting game
+	bool m_exitGame; // control exiting game
 
 };
 
